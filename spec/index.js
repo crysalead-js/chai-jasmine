@@ -1,3 +1,4 @@
+j$ = jasmine;
 require('./asymmetric_equality/AnySpec');
 require('./asymmetric_equality/AnythingSpec');
 require('./asymmetric_equality/ArrayContainingSpec');

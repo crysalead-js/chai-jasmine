@@ -1,20 +1,21 @@
 {
   "name": "chai-jasmine",
-  "description": "Jasmine style expect on top of mocha using chai.",
-  "version": "1.0.0",
+  "description": "Jasmine style expect on top of chai.",
+  "version": "1.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/crysalead-js/chai-jasmine.git"
   },
   "scripts": {
-    "test": "mocha"
+    "dist": "browserify browser.js > chai-jasmine.js"
   },
   "dependencies": {
     "chai": "^3.4.1",
     "jasmine-core": "^2.3.4"
   },
   "devDependencies": {
+    "browserify": "^12.0.1",
     "mocha": "^2.3.3"
   }
 }

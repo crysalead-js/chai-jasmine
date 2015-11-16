@@ -6,8 +6,15 @@ chai-jasmine is an extension which provides [Jasmine's](http://jasmine.github.io
 
 ## Usage
 
+node:
 ```js
 require('chai-jasmine');
+```
+
+browser:
+```js
+<script src="vendor/mocha/mocha.js" type="text/javascript"></script>
+<script src="vendor/chai-jasmine/chai-jasmine.js" type="text/javascript"></script>
 ```
 
 This implementation is based on Jasmine's core directly so all Jasmine's features are supported out of the box :
