@@ -1,0 +1,19 @@
+{
+  "name": "chai-jasmine",
+  "description": "Jasmine style expect on top of mocha using chai.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crysalead-js/chai-jasmine.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "chai": "^3.4.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
+}
