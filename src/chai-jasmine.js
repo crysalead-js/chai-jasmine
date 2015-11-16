@@ -7,7 +7,7 @@ jasmine.getEnv().spyOn = function() {
 };
 
 // Adds jasmine-style matchers
-chai.use(require('./src/matchers'));
+chai.use(require('./matchers'));
 
 // Setup aliases
 fdescribe = describe.only;

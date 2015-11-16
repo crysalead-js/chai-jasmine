@@ -5,4 +5,4 @@ if (typeof describe === 'undefined') {
 }
 jasmine = jasmineRequire.core(jasmineRequire);
 
-module.exports = require('./init');
+module.exports = require('./src/chai-jasmine');
