@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/crysalead-js/chai-jasmine.png?branch=master)](https://travis-ci.org/crysalead-js/chai-jasmine)
 
-chai-jasmine is an extension which provides [jasmine's](http://jasmine.github.io/) style expect on top of [mocha](https://mochajs.org/) using [chai](http://chaijs.com/) assertion library.
+chai-jasmine is an extension which provides [Jasmine's](http://jasmine.github.io/) style expect on top of [mocha](https://mochajs.org/) using [chai](http://chaijs.com/) assertion library.
 
 ## Usage
 
@@ -10,16 +10,20 @@ chai-jasmine is an extension which provides [jasmine's](http://jasmine.github.io
 require('chai-jasmine');
 ```
 
-Fully supported:
-* Matchers
+This implementation is based on Jasmine's core directly so all Jasmine's features are supported out of the box :
 * Focusing specs
 * Spies
 * Clock
 * Mocking Date
-* Asynchronous Support
+* Asynchronous (with the `done()` function, Jasmine >= 2.0).
 
-Not supported:
-* jasmine.Env() (too tighly coupled with jasmine specs runner)
-* Custom Equality Testers (no workaround for this feature)
-* Custom Matchers (need to be rewritten using chai)
-* Custom Reporters (need to be rewritten using mocha)
+Jasmine's matchers has been rewriten to work on top of chai so features like the [Jasmine's custom equality testers ](http://Jasmine.github.io/2.0/custom_equality.html) won't work anymore. Moreover you'll need to rewrite all your Jasmine custom matchers using chai and include them like so to make them work:
+
+```js
+var chai = require('chai-jasmine');
+chai.use(require('./your-custom-matchers'));
+```
+
+Note: all features related to the Jasmine's specs runner (like Jasmine.Env()) or reporting won't have any effect anymore.
+
+Note: spies are now cleared up during `afterEach()` which may changes a bit the spiecs persistance behavior over specs.

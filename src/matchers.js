@@ -1,12 +1,6 @@
-var jasmineRequire = require('./jasmine-require');
-var jasmine = jasmineRequire.core(jasmineRequire);
-jasmineRequire.interface(jasmine, jasmine.getEnv());
-
 module.exports = function (chai, _) {
   var Assertion = chai.Assertion
     , flag = _.flag;
-
-  chai.jasmine = jasmine;
 
   Assertion.addMethod("toBe", function (expected) {
     this.equal(expected);
@@ -243,13 +237,13 @@ module.exports = function (chai, _) {
       throw new Error('toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith');
     }
 
-    var calls = obj.calls.count();
+    var count = obj.calls.count();
     var timesMessage = expected === 1 ? 'once' : expected + ' times';
 
     this.assert(
-        calls === expected
-      , 'expected spy #{this} to have been called.'
-      , 'expected spy #{this} to not throw have been called.'
+        count === expected
+      , 'expected spy #{this} to have been called ' + timesMessage + '. It was called ' + count + ' times.'
+      , 'expected spy #{this} to not throw have been called ' + timesMessage + '.'
     );
 
     return this;
@@ -284,7 +278,7 @@ module.exports = function (chai, _) {
       , 'expected spy #{this} to have been called with #{exp} but actual calls were #{act}.'
       , 'expected spy #{this} to not have been called with #{exp} but it was.'
       , expected
-      , obj
+      , obj.calls.allArgs()
     );
     return this;
   });

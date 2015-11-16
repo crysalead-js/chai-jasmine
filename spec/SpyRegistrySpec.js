@@ -37,35 +37,6 @@ describe("SpyRegistry", function() {
       }).toThrowError(/has already been spied upon/);
     });
 
-    it("checks if it can be spied upon", function() {
-      // IE 8 doesn't support `definePropery` on non-DOM nodes
-      if (jasmine.getEnv().ieVersion < 9) { return; }
-
-      var scope = {};
-
-      function myFunc() {
-        return 1;
-      }
-
-      Object.defineProperty(scope, 'myFunc', {
-        get: function() {
-          return myFunc;
-        }
-      });
-
-      var spies = [],
-        spyRegistry = new j$.SpyRegistry({currentSpies: function() { return spies; }}),
-        subject = { spiedFunc: scope.myFunc };
-
-      expect(function() {
-        spyRegistry.spyOn(scope, 'myFunc');
-      }).toThrowError(/is not declared writable or has no setter/);
-
-      expect(function() {
-        spyRegistry.spyOn(subject, 'spiedFunc');
-      }).not.toThrowError(/is not declared writable or has no setter/);
-    });
-
     it("overrides the method on the object and returns the spy", function() {
       var originalFunctionWasCalled = false,
         spyRegistry = new j$.SpyRegistry(),

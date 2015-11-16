@@ -11,7 +11,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "chai": "^3.4.1"
+    "chai": "^3.4.1",
+    "jasmine-core": "^2.3.4"
   },
   "devDependencies": {
     "mocha": "^2.3.3"
