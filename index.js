@@ -1,8 +1,11 @@
 var jasmineRequire = require('jasmine-core');
-
-if (typeof describe === 'undefined') {
-  throw new Error("You need to run specs using `mocha` to make it works.")
-}
 jasmine = jasmineRequire.core(jasmineRequire);
 
-module.exports = require('./src/chai-jasmine');
+if (typeof describe === 'undefined') {
+  throw new Error("You need to include the mocha library first or use the `mocha` command line.")
+}
+
+var chai = require('chai');
+chai.use(require('./src/chai-jasmine'));
+
+module.exports = chai;

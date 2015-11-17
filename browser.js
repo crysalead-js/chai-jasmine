@@ -1,4 +1,5 @@
 var jasmineRequire = require('jasmine-core/lib/jasmine-core/jasmine');
+jasmine = jasmineRequire.core(jasmineRequire);
 
 if (typeof mocha !== 'undefined') {
   mocha.setup('bdd');
@@ -8,8 +9,10 @@ if (typeof mocha !== 'undefined') {
     }
   };
 } else if (typeof describe === 'undefined') {
-  throw new Error("You need to include the `mocha` library first.")
+  throw new Error("You need to include the mocha library first.")
 }
-jasmine = jasmineRequire.core(jasmineRequire);
 
-module.exports = require('./src/chai-jasmine');
+if (typeof chai === 'undefined') {
+  throw new Error("You need to include chai library first.")
+}
+chai.use(require('./src/chai-jasmine'));

@@ -12,11 +12,11 @@
     "dist": "browserify browser.js > chai-jasmine.js"
   },
   "dependencies": {
-    "chai": "^3.4.1",
     "jasmine-core": "^2.3.4"
   },
   "devDependencies": {
     "browserify": "^12.0.1",
+    "chai": "^3.4.1",
     "mocha": "^2.3.4"
   }
 }
