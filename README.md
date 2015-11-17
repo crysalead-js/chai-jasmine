@@ -4,6 +4,13 @@
 
 chai-jasmine is an extension which provides [Jasmine's](http://jasmine.github.io/) style expect on top of [mocha](https://mochajs.org/) using [chai](http://chaijs.com/) assertion library.
 
+
+## Installation
+
+```bash
+npm install chai-jasmine --save-dev;
+```
+
 ## Usage
 
 node:
