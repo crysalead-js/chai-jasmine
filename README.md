@@ -14,6 +14,7 @@ require('chai-jasmine');
 browser:
 ```js
 <script src="vendor/mocha/mocha.js" type="text/javascript"></script>
+<script src="vendor/chai/chai.js" type="text/javascript"></script>
 <script src="vendor/chai-jasmine/chai-jasmine.js" type="text/javascript"></script>
 ```
 
