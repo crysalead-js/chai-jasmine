@@ -1,71 +1,56 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-    <title>chai-jasmine test</title>
+<head>
+  <meta charset="utf-8">
+  <title>Chai Jasmine</title>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.css" type="text/css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.4.1/chai.js" type="text/javascript"></script>
-    <script src="../chai-jasmine.js" type="text/javascript"></script>
-    <script src="../spec/asymmetric_equality/AnySpec" type="text/javascript"></script>
-    <script src="../spec/asymmetric_equality/AnythingSpec" type="text/javascript"></script>
-    <script src="../spec/asymmetric_equality/ArrayContainingSpec" type="text/javascript"></script>
-    <script src="../spec/asymmetric_equality/ObjectContainingSpec" type="text/javascript"></script>
-    <script src="../spec/asymmetric_equality/StringMatchingSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/matchersUtilSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeCloseToSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeDefinedSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeFalsySpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeGreaterThanSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeLessThanSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeNaNSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeNullSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeTruthySpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toBeUndefinedSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toContainSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toEqualSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toHaveBeenCalledSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toHaveBeenCalledTimesSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toHaveBeenCalledWithSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toMatchSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toThrowErrorSpec" type="text/javascript"></script>
-    <script src="../spec/matchers/toThrowSpec" type="text/javascript"></script>
-    <script src="../spec/CallTrackerSpec.js" type="text/javascript"></script>
-    <script src="../spec/ClockSpec.js" type="text/javascript"></script>
-    <script src="../spec/DelayedFunctionSchedulerSpec.js" type="text/javascript"></script>
-    <script src="../spec/MockDateSpec.js" type="text/javascript"></script>
-    <script src="../spec/SpyRegistrySpec.js" type="text/javascript"></script>
-    <script src="../spec/SpySpec.js" type="text/javascript"></script>
-    <script src="../spec/SpyStrategySpec.js" type="text/javascript"></script>
-    <script src="../spec/TimerSpec.js" type="text/javascript"></script>
-    <script src="../spec/UtilSpec.js" type="text/javascript"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.css">
 
-    <style type="text/css">
-      p {
-        padding: 0;
-        margin: 0;
-      }
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.4.1/chai.js"></script>
+  <script type="text/javascript" src="../chai-jasmine.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/AnySpec"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/AnythingSpec"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/ArrayContainingSpec"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/ObjectContainingSpec"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/StringMatchingSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/matchersUtilSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeCloseToSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeDefinedSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeFalsySpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeGreaterThanSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeLessThanSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeNaNSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeNullSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeTruthySpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeUndefinedSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toContainSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toEqualSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledTimesSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledWithSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toMatchSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toThrowErrorSpec"></script>
+  <script type="text/javascript" src="../spec/matchers/toThrowSpec"></script>
+  <script type="text/javascript" src="../spec/CallTrackerSpec.js"></script>
+  <script type="text/javascript" src="../spec/ClockSpec.js"></script>
+  <script type="text/javascript" src="../spec/DelayedFunctionSchedulerSpec.js"></script>
+  <script type="text/javascript" src="../spec/MockDateSpec.js"></script>
+  <script type="text/javascript" src="../spec/SpyRegistrySpec.js"></script>
+  <script type="text/javascript" src="../spec/SpySpec.js"></script>
+  <script type="text/javascript" src="../spec/SpyStrategySpec.js"></script>
+  <script type="text/javascript" src="../spec/TimerSpec.js"></script>
+  <script type="text/javascript" src="../spec/UtilSpec.js"></script>
 
-      div:nth-child(1) &gt; p {
-          color: green;
-      }
-
-      div::nth-child(2) &gt; p {
-          color: blue;
-      }
-    </style>
-
-    <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded", function() {
-        window.j$ = jasmine;
-        mocha.run();
-      });
-    </script>
-  </head>
-
-  </head>
-  <body>
-    <div id="mocha"></div>
-  </body>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      window.j$ = jasmine;
+      mocha.run();
+    });
+  </script>
+</head>
+<body>
+  <div id="mocha"></div>
+</body>
 </html>

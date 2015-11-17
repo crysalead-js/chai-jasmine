@@ -1,7 +1,7 @@
 {
   "name": "chai-jasmine",
   "description": "Jasmine style expect on top of chai.",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "MIT",
   "repository": {
     "type": "git",
