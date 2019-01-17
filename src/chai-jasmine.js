@@ -304,8 +304,8 @@ module.exports = function (chai, _) {
         jasmine.matchersUtil.contains(obj.calls.allArgs(), expectedArgs)
       , 'expected spy #{this} to have been called with #{exp} but actual calls were #{act}.'
       , 'expected spy #{this} to not have been called with #{exp} but it was.'
-      , expected
-      , obj.calls.allArgs()
+      , jasmine.pp(expected)
+      , jasmine.pp(obj.calls.allArgs())
     );
     return this;
   });
