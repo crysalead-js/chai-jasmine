@@ -48,7 +48,6 @@ require('./matchers/toHaveBeenCalledBeforeSpec.js');
 require('./matchers/toHaveBeenCalledSpec.js');
 require('./matchers/toHaveBeenCalledTimesSpec.js');
 require('./matchers/toHaveBeenCalledWithSpec.js');
-require('./matchers/toHaveClassSpec.js');
 require('./matchers/toMatchSpec.js');
 require('./matchers/toThrowErrorSpec.js');
 require('./matchers/toThrowMatchingSpec.js');
