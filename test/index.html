@@ -4,43 +4,94 @@
   <meta charset="utf-8">
   <title>Chai Jasmine</title>
 
-  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.css">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.2.0/mocha.css">
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.4.1/chai.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.2.0/mocha.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.js"></script>
   <script type="text/javascript" src="../chai-jasmine.js"></script>
-  <script type="text/javascript" src="../spec/asymmetric_equality/AnySpec"></script>
-  <script type="text/javascript" src="../spec/asymmetric_equality/AnythingSpec"></script>
-  <script type="text/javascript" src="../spec/asymmetric_equality/ArrayContainingSpec"></script>
-  <script type="text/javascript" src="../spec/asymmetric_equality/ObjectContainingSpec"></script>
-  <script type="text/javascript" src="../spec/asymmetric_equality/StringMatchingSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/matchersUtilSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeCloseToSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeDefinedSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeFalsySpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeGreaterThanSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeLessThanSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeNaNSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeNullSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeTruthySpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toBeUndefinedSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toContainSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toEqualSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledTimesSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledWithSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toMatchSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toThrowErrorSpec"></script>
-  <script type="text/javascript" src="../spec/matchers/toThrowSpec"></script>
+  <script type="text/javascript">
+    jasmineUnderTest = jasmine;
+  </script>
+  <script type="text/javascript" src="../spec/helpers/asyncAwait.js"></script>
+  <script type="text/javascript" src="../spec/helpers/checkForMap.js"></script>
+  <script type="text/javascript" src="../spec/helpers/checkForSet.js"></script>
+  <script type="text/javascript" src="../spec/helpers/checkForSymbol.js"></script>
+  <script type="text/javascript" src="../spec/helpers/checkForTypedArrays.js"></script>
+  <script type="text/javascript" src="../spec/helpers/promises.js"></script>
+
+  <script type="text/javascript" src="../spec/asymmetric_equality/AnySpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/AnythingSpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/ArrayContainingSpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/ArrayWithExactContentsSpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/EmptySpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/FalsySpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/NotEmptySpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/ObjectContainingSpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/StringMatchingSpec.js"></script>
+  <script type="text/javascript" src="../spec/asymmetric_equality/TruthySpec.js"></script>
+  <script type="text/javascript" src="../spec/integration/CustomMatchersSpec.js"></script>
+  <script type="text/javascript" src="../spec/integration/CustomSpyStrategiesSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/async/toBeRejectedSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/async/toBeRejectedWithSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/async/toBeResolvedSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/async/toBeResolvedToSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/DiffBuilderSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/matchersUtilSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/nothingSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/NullDiffBuilderSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/ObjectPathSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeCloseToSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeDefinedSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeFalsySpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeGreaterThanOrEqualSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeGreaterThanSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeLessThanOrEqualSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeLessThanSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeNaNSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeNegativeInfinitySpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeNullSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBePositiveInfinitySpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeTruthySpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toBeUndefinedSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toContainSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toEqualSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledBeforeSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledTimesSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveBeenCalledWithSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toHaveClassSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toMatchSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toThrowErrorSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toThrowMatchingSpec.js"></script>
+  <script type="text/javascript" src="../spec/matchers/toThrowSpec.js"></script>
+  <script type="text/javascript" src="../spec/AsyncExpectationSpec.js"></script>
   <script type="text/javascript" src="../spec/CallTrackerSpec.js"></script>
+  <script type="text/javascript" src="../spec/ClearStackSpec.js"></script>
   <script type="text/javascript" src="../spec/ClockSpec.js"></script>
   <script type="text/javascript" src="../spec/DelayedFunctionSchedulerSpec.js"></script>
+  <script type="text/javascript" src="../spec/EnvSpec.js"></script>
+  <script type="text/javascript" src="../spec/ExceptionFormatterSpec.js"></script>
+  <script type="text/javascript" src="../spec/ExceptionsSpec.js"></script>
+  <script type="text/javascript" src="../spec/ExpectationFilterChainSpec.js"></script>
+  <script type="text/javascript" src="../spec/ExpectationResultSpec.js"></script>
+  <script type="text/javascript" src="../spec/ExpectationSpec.js"></script>
+  <script type="text/javascript" src="../spec/formatErrorMsgSpec.js"></script>
+  <script type="text/javascript" src="../spec/GlobalErrorsSpec.js"></script>
+  <script type="text/javascript" src="../spec/JsApiReporterSpec.js"></script>
   <script type="text/javascript" src="../spec/MockDateSpec.js"></script>
+  <script type="text/javascript" src="../spec/PrettyPrintSpec.js"></script>
+  <script type="text/javascript" src="../spec/QueueRunnerSpec.js"></script>
+  <script type="text/javascript" src="../spec/ReportDispatcherSpec.js"></script>
+  <script type="text/javascript" src="../spec/SpecSpec.js"></script>
   <script type="text/javascript" src="../spec/SpyRegistrySpec.js"></script>
   <script type="text/javascript" src="../spec/SpySpec.js"></script>
   <script type="text/javascript" src="../spec/SpyStrategySpec.js"></script>
+  <script type="text/javascript" src="../spec/StackTraceSpec.js"></script>
+  <script type="text/javascript" src="../spec/SuiteSpec.js"></script>
   <script type="text/javascript" src="../spec/TimerSpec.js"></script>
+  <script type="text/javascript" src="../spec/TreeProcessorSpec.js"></script>
+  <script type="text/javascript" src="../spec/UserContextSpec.js"></script>
   <script type="text/javascript" src="../spec/UtilSpec.js"></script>
 
   <script type="text/javascript">

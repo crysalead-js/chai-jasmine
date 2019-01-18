@@ -4,14 +4,28 @@ module.exports = function (chai, _) {
 
   // Overrides Spies so it won't rely on Jasmine's env
   var spies = [];
+
+  createSpy = function(name, originalFn) {
+    return jasmine.Spy(name, originalFn);
+  };
+
   var spyRegistry = new jasmine.SpyRegistry({
+    createSpy: createSpy,
     currentSpies: function() {
       return spies;
     }
   });
-  jasmine.getEnv().spyOn = function() {
+
+  var env = jasmine.getEnv();
+
+  env.spyOn = function() {
     return spyRegistry.spyOn.apply(spyRegistry, arguments);
   };
+  jasmine.createSpy = createSpy;
+  jasmine.createSpyObj = env.createSpyObj;
+  jasmine.clock = function() {
+    return env.clock;
+  }
 
   // Setup aliases
   fdescribe = describe.only;
@@ -67,7 +81,11 @@ module.exports = function (chai, _) {
   });
 
   Assertion.addMethod("toBeDefined", function () {
-    this.defined;
+    this.assert(
+        undefined !== flag(this, 'object')
+      , 'expected #{this} to be defined'
+      , 'expected #{this} not to be defined'
+    );
   });
 
   Assertion.addMethod("toBeUndefined", function () {

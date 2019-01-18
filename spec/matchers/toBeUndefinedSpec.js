@@ -1,10 +1,18 @@
 describe("toBeUndefined", function() {
-  it("matches for undefined values", function() {
-    expect(void 0).toBeUndefined(false);
+  it("passes for undefined values", function() {
+    var matcher = jasmineUnderTest.matchers.toBeUndefined(),
+      result;
+
+    result = matcher.compare(void 0);
+    expect(result.pass).toBe(true);
 
   });
 
   it("fails when matching defined values", function() {
-    expect('foo').not.toBeUndefined();
-  });
+    var matcher = jasmineUnderTest.matchers.toBeUndefined(),
+      result;
+
+    result = matcher.compare('foo');
+    expect(result.pass).toBe(false);
+  })
 });

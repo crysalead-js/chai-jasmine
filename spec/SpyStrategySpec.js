@@ -1,20 +1,20 @@
 describe("SpyStrategy", function() {
 
   it("defaults its name to unknown", function() {
-    var spyStrategy = new j$.SpyStrategy();
+    var spyStrategy = new jasmineUnderTest.SpyStrategy();
 
-    expect(spyStrategy.identity()).toEqual("unknown");
+    expect(spyStrategy.identity).toEqual("unknown");
   });
 
   it("takes a name", function() {
-    var spyStrategy = new j$.SpyStrategy({name: "foo"});
+    var spyStrategy = new jasmineUnderTest.SpyStrategy({name: "foo"});
 
-    expect(spyStrategy.identity()).toEqual("foo");
+    expect(spyStrategy.identity).toEqual("foo");
   });
 
   it("stubs an original function, if provided", function() {
     var originalFn = jasmine.createSpy("original"),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn});
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn});
 
     spyStrategy.exec();
 
@@ -23,11 +23,11 @@ describe("SpyStrategy", function() {
 
   it("allows an original function to be called, passed through the params and returns it's value", function() {
     var originalFn = jasmine.createSpy("original").and.returnValue(42),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn}),
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn}),
         returnValue;
 
     spyStrategy.callThrough();
-    returnValue = spyStrategy.exec("foo");
+    returnValue = spyStrategy.exec(null, ["foo"]);
 
     expect(originalFn).toHaveBeenCalled();
     expect(originalFn.calls.mostRecent().args).toEqual(["foo"]);
@@ -36,7 +36,7 @@ describe("SpyStrategy", function() {
 
   it("can return a specified value when executed", function() {
     var originalFn = jasmine.createSpy("original"),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn}),
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn}),
         returnValue;
 
     spyStrategy.returnValue(17);
@@ -48,7 +48,7 @@ describe("SpyStrategy", function() {
 
   it("can return specified values in order specified when executed", function() {
     var originalFn = jasmine.createSpy("original"),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn});
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn});
 
     spyStrategy.returnValues('value1', 'value2', 'value3');
 
@@ -61,7 +61,7 @@ describe("SpyStrategy", function() {
 
   it("allows an exception to be thrown when executed", function() {
     var originalFn = jasmine.createSpy("original"),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn});
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn});
 
     spyStrategy.throwError(new TypeError("bar"));
 
@@ -71,7 +71,7 @@ describe("SpyStrategy", function() {
 
   it("allows a non-Error to be thrown, wrapping it into an exception when executed", function() {
     var originalFn = jasmine.createSpy("original"),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn});
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn});
 
     spyStrategy.throwError("bar");
 
@@ -82,7 +82,7 @@ describe("SpyStrategy", function() {
   it("allows a fake function to be called instead", function() {
     var originalFn = jasmine.createSpy("original"),
         fakeFn = jasmine.createSpy("fake").and.returnValue(67),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn}),
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn}),
         returnValue;
 
     spyStrategy.callFake(fakeFn);
@@ -92,10 +92,88 @@ describe("SpyStrategy", function() {
     expect(returnValue).toEqual(67);
   });
 
+  it("allows a fake async function to be called instead", function(done) {
+    jasmine.getEnv().requireAsyncAwait();
+    var originalFn = jasmine.createSpy("original"),
+        fakeFn = jasmine.createSpy("fake").and.callFake(eval("async () => { return 67; }")),
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn}),
+        returnValue;
+
+    spyStrategy.callFake(fakeFn);
+    spyStrategy.exec().then(function (returnValue) {
+      expect(originalFn).not.toHaveBeenCalled();
+      expect(fakeFn).toHaveBeenCalled();
+      expect(returnValue).toEqual(67);
+      done();
+    }).catch(function (err) {
+      done.fail(err);
+    })
+  });
+
+  it("allows a custom strategy to be used", function() {
+    var plan = jasmine.createSpy('custom strategy')
+        .and.returnValue('custom strategy result'),
+      customStrategy = jasmine.createSpy('custom strategy')
+        .and.returnValue(plan),
+      originalFn = jasmine.createSpy('original'),
+      spyStrategy = new jasmineUnderTest.SpyStrategy({
+        fn: originalFn,
+        customStrategies: {
+          doSomething: customStrategy
+        }
+      });
+
+    spyStrategy.doSomething(1, 2, 3);
+    expect(customStrategy).toHaveBeenCalledWith(1, 2, 3);
+    expect(spyStrategy.exec(null, ['some', 'args']))
+      .toEqual('custom strategy result');
+    expect(plan).toHaveBeenCalledWith('some', 'args');
+  });
+
+  it("throws an error if a custom strategy doesn't return a function", function() {
+    var originalFn = jasmine.createSpy('original'),
+      spyStrategy = new jasmineUnderTest.SpyStrategy({
+        fn: originalFn,
+        customStrategies: {
+          doSomething: function() { return 'not a function' }
+        }
+      });
+
+    expect(function() { spyStrategy.doSomething(1, 2, 3) }).toThrowError('Spy strategy must return a function');
+  });
+
+  it("does not allow custom strategies to overwrite existing methods", function() {
+    var spyStrategy = new jasmineUnderTest.SpyStrategy({
+        fn: function() {},
+        customStrategies: {
+          exec: function() {}
+        }
+       });
+
+    expect(spyStrategy.exec).toBe(jasmineUnderTest.SpyStrategy.prototype.exec);
+  });
+
+  it('throws an error when a non-function is passed to callFake strategy', function() {
+    var originalFn = jasmine.createSpy('original'),
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn}),
+        invalidFakes = [5, 'foo', {}, true, false, null, void 0, new Date(), /.*/];
+
+    spyOn(jasmineUnderTest, 'isFunction_').and.returnValue(false);
+    spyOn(jasmineUnderTest, 'isAsyncFunction_').and.returnValue(false);
+
+    expect(function () {
+      spyStrategy.callFake(function() {});
+    }).toThrowError(/^Argument passed to callFake should be a function, got/);
+
+    expect(function () {
+      spyStrategy.callFake(function() {});
+    }).toThrowError(/^Argument passed to callFake should be a function, got/);
+  });
+
   it("allows a return to plan stubbing after another strategy", function() {
     var originalFn = jasmine.createSpy("original"),
         fakeFn = jasmine.createSpy("fake").and.returnValue(67),
-        spyStrategy = new j$.SpyStrategy({fn: originalFn}),
+        spyStrategy = new jasmineUnderTest.SpyStrategy({fn: originalFn}),
         returnValue;
 
     spyStrategy.callFake(fakeFn);
@@ -103,7 +181,7 @@ describe("SpyStrategy", function() {
 
     expect(originalFn).not.toHaveBeenCalled();
     expect(returnValue).toEqual(67);
-    
+
     spyStrategy.stub();
     returnValue = spyStrategy.exec();
 
@@ -113,12 +191,12 @@ describe("SpyStrategy", function() {
   it("returns the spy after changing the strategy", function(){
     var spy = {},
         spyFn = jasmine.createSpy('spyFn').and.returnValue(spy),
-        spyStrategy = new j$.SpyStrategy({getSpy: spyFn});
+        spyStrategy = new jasmineUnderTest.SpyStrategy({getSpy: spyFn});
 
     expect(spyStrategy.callThrough()).toBe(spy);
     expect(spyStrategy.returnValue()).toBe(spy);
     expect(spyStrategy.throwError()).toBe(spy);
-    expect(spyStrategy.callFake()).toBe(spy);
+    expect(spyStrategy.callFake(function() {})).toBe(spy);
     expect(spyStrategy.stub()).toBe(spy);
   });
 });

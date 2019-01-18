@@ -1,26 +1,26 @@
 describe("toContain", function() {
-  describe("with an array", function() {
-    it("passes if 3 is in [1, 2, 3]", function() {
-      expect([1, 2, 3]).toContain(3);
-    });
+  it("delegates to jasmineUnderTest.matchersUtil.contains", function() {
+    var util = {
+        contains: jasmine.createSpy('delegated-contains').and.returnValue(true)
+      },
+      matcher = jasmineUnderTest.matchers.toContain(util),
+      result;
 
-    it("passes if 'a' is in ['a', 'b', 'c']", function() {
-      expect(['a', 'b', 'c']).toContain('a');
-    });
-
-    it("passes if 'd' is in ['a', 'b', 'c']", function() {
-      expect(['a', 'b', 'c']).not.toContain('d');
-    });
+    result = matcher.compare("ABC", "B");
+    expect(util.contains).toHaveBeenCalledWith("ABC", "B", []);
+    expect(result.pass).toBe(true);
   });
 
-  describe("with a string", function() {
-    it("passes if contained in expected", function() {
-      expect('Hello World!').toContain('World');
-      expect('World').toContain('World');
-    });
+  it("delegates to jasmineUnderTest.matchersUtil.contains, passing in equality testers if present", function() {
+    var util = {
+        contains: jasmine.createSpy('delegated-contains').and.returnValue(true)
+      },
+      customEqualityTesters = ['a', 'b'],
+      matcher = jasmineUnderTest.matchers.toContain(util, customEqualityTesters),
+      result;
 
-    it("fails if not contained in expected", function() {
-      expect('Hello World!').not.toContain('world');
-    });
+    result = matcher.compare("ABC", "B");
+    expect(util.contains).toHaveBeenCalledWith("ABC", "B", ['a', 'b']);
+    expect(result.pass).toBe(true);
   });
 });

@@ -1,16 +1,38 @@
 describe("toBeFalsy", function() {
   it("passes for 'falsy' values", function() {
-    expect(false).toBeFalsy();
-    expect(0).toBeFalsy();
-    expect('').toBeFalsy();
-    expect(null).toBeFalsy();
-    expect(void 0).toBeFalsy();
+    var matcher = jasmineUnderTest.matchers.toBeFalsy(),
+      result;
+
+    result = matcher.compare(false);
+    expect(result.pass).toBe(true);
+
+    result = matcher.compare(0);
+    expect(result.pass).toBe(true);
+
+    result = matcher.compare('');
+    expect(result.pass).toBe(true);
+
+    result = matcher.compare(null);
+    expect(result.pass).toBe(true);
+
+    result = matcher.compare(void 0);
+    expect(result.pass).toBe(true);
   });
 
   it("fails for 'truthy' values", function() {
-    expect(true).not.toBeFalsy();
-    expect(1).not.toBeFalsy();
-    expect("foo").not.toBeFalsy();
-    expect({}).not.toBeFalsy();
+    var matcher = jasmineUnderTest.matchers.toBeFalsy(),
+      result;
+
+    result = matcher.compare(true);
+    expect(result.pass).toBe(false);
+
+    result = matcher.compare(1);
+    expect(result.pass).toBe(false);
+
+    result = matcher.compare("foo");
+    expect(result.pass).toBe(false);
+
+    result = matcher.compare({});
+    expect(result.pass).toBe(false);
   });
 });
