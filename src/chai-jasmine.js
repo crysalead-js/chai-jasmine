@@ -16,7 +16,7 @@ module.exports = function (chai, _) {
     }
   });
 
-  var env = jasmine.getEnv();
+  var env = jasmine.getEnv({ suppressLoadErrors: true });
 
   env.spyOn = function() {
     return spyRegistry.spyOn.apply(spyRegistry, arguments);
