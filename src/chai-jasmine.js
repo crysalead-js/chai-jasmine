@@ -57,6 +57,13 @@ module.exports = function (chai, _) {
     );
   });
 
+  Assertion.addMethod("toBeFalse", function () {
+    this.assert(
+        !flag(this, 'object')
+      , 'expected #{this} to be truth'
+      , 'expected #{this} to be false');
+  });
+
   Assertion.addMethod("toBeFalsy", function () {
     this.assert(
         !flag(this, 'object')
@@ -68,6 +75,10 @@ module.exports = function (chai, _) {
     this.greaterThan(expected, msg);
   });
 
+  Assertion.addMethod("toBeInstanceOf", function () {
+    this.instanceof;
+  });
+
   Assertion.addMethod("toBeLessThan", function (expected, msg) {
     this.lessThan(expected, msg);
   });
@@ -77,6 +88,10 @@ module.exports = function (chai, _) {
   });
 
   Assertion.addMethod("toBeTruthy", function () {
+    this.ok;
+  });
+
+  Assertion.addMethod("toBeTrue", function () {
     this.ok;
   });
 
@@ -105,13 +120,17 @@ module.exports = function (chai, _) {
   });
 
   Assertion.addMethod("toEqual", function (expected, msg) {
+    const pp = jasmine.makePrettyPrinter();
+    const matchersUtil = new jasmine.MatchersUtil({ pp: pp });
+    const matcher = jasmine.matchers.toEqual(matchersUtil);
     if (msg) flag(this, 'message', msg);
     var obj = flag(this, 'object');
+
     this.assert(
-        jasmine.matchersUtil.equals(obj, expected)
+        matcher.compare(obj, expected).pass
       , 'expected #{this} to equal #{exp}'
       , 'expected #{this} to not equal #{exp}'
-      , expected && expected.jasmineToString ? expected.jasmineToString() : expected
+      , expected && expected.jasmineToString ? expected.jasmineToString(pp) : expected
       , obj
       , true
     );
@@ -297,6 +316,7 @@ module.exports = function (chai, _) {
   Assertion.addMethod("toHaveBeenCalledWith", function (expected) {
     var obj = flag(this, 'object');
     var expectedArgs = Array.prototype.slice.call(arguments, 0);
+    const pp = jasmine.makePrettyPrinter();
 
     if (!jasmine.isSpy(obj)) {
       throw new Error('Expected a spy, but got something else.');
@@ -305,7 +325,7 @@ module.exports = function (chai, _) {
     var expected = [];
     var len = expectedArgs.length;
     for (var i = 0; i < len; i++) {
-      expected.push(expectedArgs[i] && expectedArgs[i].jasmineToString ? expectedArgs[i].jasmineToString() : expectedArgs[i]);
+      expected.push(expectedArgs[i] && expectedArgs[i].jasmineToString ? expectedArgs[i].jasmineToString(pp) : expectedArgs[i]);
     }
 
     if (!obj.calls.any()) {
@@ -318,12 +338,16 @@ module.exports = function (chai, _) {
       return this;
     }
 
+
+    const matchersUtil = new jasmine.MatchersUtil({ pp: pp });
+    const matcher = jasmine.matchers.toContain(matchersUtil);
+
     this.assert(
-        jasmine.matchersUtil.contains(obj.calls.allArgs(), expectedArgs)
+        matcher.compare(obj.calls.allArgs(), expectedArgs).pass
       , 'expected spy #{this} to have been called with #{exp} but actual calls were #{act}.'
       , 'expected spy #{this} to not have been called with #{exp} but it was.'
-      , jasmine.pp(expected)
-      , jasmine.pp(obj.calls.allArgs())
+      , pp(expected)
+      , pp(obj.calls.allArgs())
     );
     return this;
   });

@@ -1,26 +1,25 @@
-describe("toContain", function() {
-  it("delegates to jasmineUnderTest.matchersUtil.contains", function() {
-    var util = {
+describe('toContain', function() {
+  it('delegates to jasmineUnderTest.matchersUtil.contains', function() {
+    const matchersUtil = {
         contains: jasmine.createSpy('delegated-contains').and.returnValue(true)
       },
-      matcher = jasmineUnderTest.matchers.toContain(util),
-      result;
+      matcher = jasmineUnderTest.matchers.toContain(matchersUtil);
 
-    result = matcher.compare("ABC", "B");
-    expect(util.contains).toHaveBeenCalledWith("ABC", "B", []);
+    const result = matcher.compare('ABC', 'B');
+    expect(matchersUtil.contains).toHaveBeenCalledWith('ABC', 'B');
     expect(result.pass).toBe(true);
   });
 
-  it("delegates to jasmineUnderTest.matchersUtil.contains, passing in equality testers if present", function() {
-    var util = {
-        contains: jasmine.createSpy('delegated-contains').and.returnValue(true)
+  it('works with custom equality testers', function() {
+    const tester = function(a, b) {
+        return a.toString() === b.toString();
       },
-      customEqualityTesters = ['a', 'b'],
-      matcher = jasmineUnderTest.matchers.toContain(util, customEqualityTesters),
-      result;
+      matchersUtil = new jasmineUnderTest.MatchersUtil({
+        customTesters: [tester]
+      }),
+      matcher = jasmineUnderTest.matchers.toContain(matchersUtil);
 
-    result = matcher.compare("ABC", "B");
-    expect(util.contains).toHaveBeenCalledWith("ABC", "B", ['a', 'b']);
+    const result = matcher.compare(['1', '2'], 2);
     expect(result.pass).toBe(true);
   });
 });

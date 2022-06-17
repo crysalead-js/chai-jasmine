@@ -1,5 +1,5 @@
 describe('ObjectPath', function() {
-  var ObjectPath = jasmineUnderTest.ObjectPath;
+  const ObjectPath = jasmineUnderTest.ObjectPath;
 
   it('represents the path to a node in an object tree', function() {
     expect(new ObjectPath(['foo', 'bar']).toString()).toEqual('$.foo.bar');
@@ -25,6 +25,10 @@ describe('ObjectPath', function() {
     expect(new ObjectPath(['1hello']).toString()).toEqual("$['1hello']");
   });
 
+  it('renders symbols with squre bracket notation', function() {
+    expect(new ObjectPath([Symbol('a')]).toString()).toEqual('$[Symbol(a)]');
+  });
+
   it('renders as the empty string when empty', function() {
     expect(new ObjectPath().toString()).toEqual('');
   });
@@ -34,10 +38,10 @@ describe('ObjectPath', function() {
   });
 
   it('can be created based on another path', function() {
-    var root = new ObjectPath();
-    var path = root.add('foo');
+    const root = new ObjectPath();
+    const path = root.add('foo');
 
     expect(path.toString()).toEqual('$.foo');
     expect(root.toString()).toEqual('');
-  })
+  });
 });

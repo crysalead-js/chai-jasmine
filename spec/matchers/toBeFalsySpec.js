@@ -1,7 +1,7 @@
-describe("toBeFalsy", function() {
+describe('toBeFalsy', function() {
   it("passes for 'falsy' values", function() {
-    var matcher = jasmineUnderTest.matchers.toBeFalsy(),
-      result;
+    const matcher = jasmineUnderTest.matchers.toBeFalsy();
+    let result;
 
     result = matcher.compare(false);
     expect(result.pass).toBe(true);
@@ -15,13 +15,16 @@ describe("toBeFalsy", function() {
     result = matcher.compare(null);
     expect(result.pass).toBe(true);
 
+    result = matcher.compare(undefined);
+    expect(result.pass).toBe(true);
+
     result = matcher.compare(void 0);
     expect(result.pass).toBe(true);
   });
 
   it("fails for 'truthy' values", function() {
-    var matcher = jasmineUnderTest.matchers.toBeFalsy(),
-      result;
+    const matcher = jasmineUnderTest.matchers.toBeFalsy();
+    let result;
 
     result = matcher.compare(true);
     expect(result.pass).toBe(false);
@@ -29,10 +32,16 @@ describe("toBeFalsy", function() {
     result = matcher.compare(1);
     expect(result.pass).toBe(false);
 
-    result = matcher.compare("foo");
+    result = matcher.compare('foo');
     expect(result.pass).toBe(false);
 
     result = matcher.compare({});
+    expect(result.pass).toBe(false);
+
+    result = matcher.compare([]);
+    expect(result.pass).toBe(false);
+
+    result = matcher.compare(function() {});
     expect(result.pass).toBe(false);
   });
 });

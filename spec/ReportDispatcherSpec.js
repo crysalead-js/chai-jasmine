@@ -1,16 +1,22 @@
-describe("ReportDispatcher", function() {
-
-  it("builds an interface of requested methods", function() {
-    var dispatcher = new jasmineUnderTest.ReportDispatcher(['foo', 'bar', 'baz']);
+describe('ReportDispatcher', function() {
+  it('builds an interface of requested methods', function() {
+    const dispatcher = new jasmineUnderTest.ReportDispatcher([
+      'foo',
+      'bar',
+      'baz'
+    ]);
 
     expect(dispatcher.foo).toBeDefined();
     expect(dispatcher.bar).toBeDefined();
     expect(dispatcher.baz).toBeDefined();
   });
 
-  it("dispatches requested methods to added reporters", function() {
-    var queueRunnerFactory = jasmine.createSpy('queueRunner'),
-      dispatcher = new jasmineUnderTest.ReportDispatcher(['foo', 'bar'], queueRunnerFactory),
+  it('dispatches requested methods to added reporters', function() {
+    const queueRunnerFactory = jasmine.createSpy('queueRunner'),
+      dispatcher = new jasmineUnderTest.ReportDispatcher(
+        ['foo', 'bar'],
+        queueRunnerFactory
+      ),
       reporter = jasmine.createSpyObj('reporter', ['foo', 'bar']),
       anotherReporter = jasmine.createSpyObj('reporter', ['foo', 'bar']),
       completeCallback = jasmine.createSpy('complete');
@@ -20,12 +26,17 @@ describe("ReportDispatcher", function() {
 
     dispatcher.foo(123, 456, completeCallback);
 
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: [{fn: jasmine.any(Function)}, {fn: jasmine.any(Function)}],
-      isReporter: true
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: [
+          { fn: jasmine.any(Function) },
+          { fn: jasmine.any(Function) }
+        ],
+        isReporter: true
+      })
+    );
 
-    var fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
+    let fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
     fns[0].fn();
     expect(reporter.foo).toHaveBeenCalledWith(123, 456);
     expect(reporter.foo.calls.mostRecent().object).toBe(reporter);
@@ -38,10 +49,15 @@ describe("ReportDispatcher", function() {
 
     dispatcher.bar('a', 'b', completeCallback);
 
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: [{fn: jasmine.any(Function)}, {fn: jasmine.any(Function)}],
-      isReporter: true
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: [
+          { fn: jasmine.any(Function) },
+          { fn: jasmine.any(Function) }
+        ],
+        isReporter: true
+      })
+    );
 
     fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
     fns[0].fn();
@@ -52,40 +68,53 @@ describe("ReportDispatcher", function() {
   });
 
   it("does not dispatch to a reporter if the reporter doesn't accept the method", function() {
-    var queueRunnerFactory = jasmine.createSpy('queueRunner'),
-      dispatcher = new jasmineUnderTest.ReportDispatcher(['foo'], queueRunnerFactory),
+    const queueRunnerFactory = jasmine.createSpy('queueRunner'),
+      dispatcher = new jasmineUnderTest.ReportDispatcher(
+        ['foo'],
+        queueRunnerFactory
+      ),
       reporter = jasmine.createSpyObj('reporter', ['baz']);
 
     dispatcher.addReporter(reporter);
 
     dispatcher.foo(123, 456);
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: []
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: []
+      })
+    );
   });
 
   it("allows providing a fallback reporter in case there's no other reporter", function() {
-    var queueRunnerFactory = jasmine.createSpy('queueRunner'),
-      dispatcher = new jasmineUnderTest.ReportDispatcher(['foo', 'bar'], queueRunnerFactory),
+    const queueRunnerFactory = jasmine.createSpy('queueRunner'),
+      dispatcher = new jasmineUnderTest.ReportDispatcher(
+        ['foo', 'bar'],
+        queueRunnerFactory
+      ),
       reporter = jasmine.createSpyObj('reporter', ['foo', 'bar']),
       completeCallback = jasmine.createSpy('complete');
 
     dispatcher.provideFallbackReporter(reporter);
     dispatcher.foo(123, 456, completeCallback);
 
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: [{fn: jasmine.any(Function)}],
-      isReporter: true
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: [{ fn: jasmine.any(Function) }],
+        isReporter: true
+      })
+    );
 
-    var fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
+    const fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
     fns[0].fn();
     expect(reporter.foo).toHaveBeenCalledWith(123, 456);
   });
 
-  it("does not call fallback reporting methods when another reporter is provided", function() {
-    var queueRunnerFactory = jasmine.createSpy('queueRunner'),
-      dispatcher = new jasmineUnderTest.ReportDispatcher(['foo', 'bar'], queueRunnerFactory),
+  it('does not call fallback reporting methods when another reporter is provided', function() {
+    const queueRunnerFactory = jasmine.createSpy('queueRunner'),
+      dispatcher = new jasmineUnderTest.ReportDispatcher(
+        ['foo', 'bar'],
+        queueRunnerFactory
+      ),
       reporter = jasmine.createSpyObj('reporter', ['foo', 'bar']),
       fallbackReporter = jasmine.createSpyObj('otherReporter', ['foo', 'bar']),
       completeCallback = jasmine.createSpy('complete');
@@ -94,32 +123,39 @@ describe("ReportDispatcher", function() {
     dispatcher.addReporter(reporter);
     dispatcher.foo(123, 456, completeCallback);
 
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: [{fn: jasmine.any(Function)}],
-      isReporter: true
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: [{ fn: jasmine.any(Function) }],
+        isReporter: true
+      })
+    );
 
-    var fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
+    const fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
     fns[0].fn();
     expect(reporter.foo).toHaveBeenCalledWith(123, 456);
     expect(fallbackReporter.foo).not.toHaveBeenCalledWith(123, 456);
   });
 
-  it("allows registered reporters to be cleared", function() {
-    var queueRunnerFactory = jasmine.createSpy('queueRunner'),
-        dispatcher = new jasmineUnderTest.ReportDispatcher(['foo', 'bar'], queueRunnerFactory),
-        reporter1 = jasmine.createSpyObj('reporter1', ['foo', 'bar']),
-        reporter2 = jasmine.createSpyObj('reporter2', ['foo', 'bar']),
+  it('allows registered reporters to be cleared', function() {
+    const queueRunnerFactory = jasmine.createSpy('queueRunner'),
+      dispatcher = new jasmineUnderTest.ReportDispatcher(
+        ['foo', 'bar'],
+        queueRunnerFactory
+      ),
+      reporter1 = jasmine.createSpyObj('reporter1', ['foo', 'bar']),
+      reporter2 = jasmine.createSpyObj('reporter2', ['foo', 'bar']),
       completeCallback = jasmine.createSpy('complete');
 
     dispatcher.addReporter(reporter1);
     dispatcher.foo(123, completeCallback);
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: [{fn: jasmine.any(Function)}],
-      isReporter: true
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: [{ fn: jasmine.any(Function) }],
+        isReporter: true
+      })
+    );
 
-    var fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
+    let fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
     fns[0].fn();
     expect(reporter1.foo).toHaveBeenCalledWith(123);
 
@@ -127,10 +163,12 @@ describe("ReportDispatcher", function() {
     dispatcher.addReporter(reporter2);
     dispatcher.bar(456, completeCallback);
 
-    expect(queueRunnerFactory).toHaveBeenCalledWith(jasmine.objectContaining({
-      queueableFns: [{fn: jasmine.any(Function)}],
-      isReporter: true
-    }));
+    expect(queueRunnerFactory).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        queueableFns: [{ fn: jasmine.any(Function) }],
+        isReporter: true
+      })
+    );
 
     fns = queueRunnerFactory.calls.mostRecent().args[0].queueableFns;
     fns[0].fn();
