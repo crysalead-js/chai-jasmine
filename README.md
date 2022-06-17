@@ -1,6 +1,6 @@
 # chai-jasmine
 
-[![Build Status](https://travis-ci.org/crysalead-js/chai-jasmine.png?branch=master)](https://travis-ci.org/crysalead-js/chai-jasmine)
+[![Build Status](https://app.travis-ci.com/crysalead-js/chai-jasmine.png?branch=master)](https://app.travis-ci.com/crysalead-js/chai-jasmine)
 
 chai-jasmine is an extension which provides [Jasmine's](http://jasmine.github.io/) style expect on top of [mocha](https://mochajs.org/) using [chai](http://chaijs.com/) assertion library.
 
