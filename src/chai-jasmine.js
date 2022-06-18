@@ -2,11 +2,14 @@ module.exports = function (chai, _) {
   var Assertion = chai.Assertion
     , flag = _.flag;
 
+  var pp = jasmine.makePrettyPrinter();
+  var matchersUtil = new jasmine.MatchersUtil({ pp: pp });
+
   // Overrides Spies so it won't rely on Jasmine's env
   var spies = [];
 
   createSpy = function(name, originalFn) {
-    return jasmine.Spy(name, originalFn);
+    return jasmine.Spy(name, matchersUtil, { originalFn: originalFn });
   };
 
   var spyRegistry = new jasmine.SpyRegistry({
@@ -120,9 +123,7 @@ module.exports = function (chai, _) {
   });
 
   Assertion.addMethod("toEqual", function (expected, msg) {
-    const pp = jasmine.makePrettyPrinter();
-    const matchersUtil = new jasmine.MatchersUtil({ pp: pp });
-    const matcher = jasmine.matchers.toEqual(matchersUtil);
+    var matcher = jasmine.matchers.toEqual(matchersUtil);
     if (msg) flag(this, 'message', msg);
     var obj = flag(this, 'object');
 
@@ -316,7 +317,6 @@ module.exports = function (chai, _) {
   Assertion.addMethod("toHaveBeenCalledWith", function (expected) {
     var obj = flag(this, 'object');
     var expectedArgs = Array.prototype.slice.call(arguments, 0);
-    const pp = jasmine.makePrettyPrinter();
 
     if (!jasmine.isSpy(obj)) {
       throw new Error('Expected a spy, but got something else.');
@@ -338,9 +338,7 @@ module.exports = function (chai, _) {
       return this;
     }
 
-
-    const matchersUtil = new jasmine.MatchersUtil({ pp: pp });
-    const matcher = jasmine.matchers.toContain(matchersUtil);
+    var matcher = jasmine.matchers.toContain(matchersUtil);
 
     this.assert(
         matcher.compare(obj.calls.allArgs(), expectedArgs).pass
